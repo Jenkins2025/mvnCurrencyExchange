@@ -1,14 +1,10 @@
+#This is called a scripted pipeline,node is refers to a machine where all pipeline is define
+#all the stages helps to seperate all the Build
 node {
 
 	stage('Build') {
 		echo "Build"
-	}
-
-	stage('Test') {
 		echo "Test"
-	}
-
-    stage('Intergration Test') {
-		echo "Test"
-	}
+		echo "Integrated Test"
+	
 }
