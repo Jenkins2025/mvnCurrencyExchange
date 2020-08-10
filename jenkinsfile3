@@ -22,10 +22,18 @@ pipeline {
             }
 
         }
-
-
     }
-
+    post {
+            always {
+                echo 'Im awesome.I rum alwys'
+            }
+            success {
+                echo 'I run whenever you are successfule Eghosa'
+            }
+            failure {
+                echo 'Im absent whenever you fail your exam'
+            }
+        }
 
 
 }
