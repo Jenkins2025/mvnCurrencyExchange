@@ -9,7 +9,7 @@ pipeline {
 
     stages{
         
-        stage ('Checkput') {
+        stage ('Checkout') {
             steps {
                 sh 'mvn --version'
 				sh 'docker version'
@@ -25,7 +25,7 @@ pipeline {
         
         stage('Compile') {
 			steps {
-				sh "mvn clean install"
+				sh "mvn clean compile"
 			}
 		}
 
