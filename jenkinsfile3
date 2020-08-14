@@ -29,11 +29,15 @@ pipeline {
 			}
 		}
 
-        stage ('Code Quality scan')  {
-             steps  {
-            sh "mvn  sonar:sonar"
-        }
-       }
+        stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('SonarQube') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+
 
        stage ('Test') {
             steps {
@@ -47,7 +51,18 @@ pipeline {
             }
 
         }
-    }
+       }
+
+        stage('Build Docker Image') {
+			steps {
+				//"docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
+				script {
+					dockerImage = docker.build("agunuworld/currency-exchange-devops:${env.BUILD_TAG}")
+				}
+
+			}
+		}
+
     post {
             always {
                 echo 'Im awesome.I rum alwys'
