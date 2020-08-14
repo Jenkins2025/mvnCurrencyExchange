@@ -1,5 +1,6 @@
 node {
-
+     
+     def buildNumber = BUILD_NUMBER
     def mvnHome = tool 'myMaven4'
     
     stage ("checkout")  {
@@ -32,14 +33,14 @@ node {
    }
 
     stage('Build Docker Image'){
-        sh 'docker build -t agunuworld/currency-exchange-devops .'
+        sh 'docker build -t agunuworld/currency-exchange-devops:${buildNumber} .'
     }
   
      stage('Push Docker Image'){
          withCredentials([string(credentialsId: 'jenkins-docker-public-hub-conneciton', variable: 'myDockerPublicRegistry')]) {
           sh "docker login -u agunuworld -p ${myDockerPublicRegistry}"
         }
-        sh 'docker push agunuworld/currency-exchange-devops'
+        sh 'docker push agunuworld/currency-exchange-devops:${buildNumber} '
      }
 
     stage ('Slack notification')  {
