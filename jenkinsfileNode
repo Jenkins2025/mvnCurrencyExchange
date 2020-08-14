@@ -1,0 +1,19 @@
+node {
+
+    def mvnHome = tool 'myMaven4'
+    
+    stage ("checkout")  {
+    git credentialsId: 'git-authentication-jenkins-login', url: 'https://github.com/agunuworld4/jenkin-devops-microservice.git'
+    }
+
+  
+  stage ('build')  {
+    sh "${mvnHome}/bin/mvn clean install "
+    }
+
+  
+   stage ('Code coverage')  {
+    jacoco buildOverBuild: true, changeBuildStatus: true, deltaBranchCoverage: '20', deltaClassCoverage: '20', deltaComplexityCoverage: '20', deltaInstructionCoverage: '20', deltaLineCoverage: '20', deltaMethodCoverage: '20', maximumBranchCoverage: '20', maximumClassCoverage: '20', maximumComplexityCoverage: '20', maximumInstructionCoverage: '20', maximumLineCoverage: '20', maximumMethodCoverage: '20', minimumBranchCoverage: '20', minimumClassCoverage: '20', minimumComplexityCoverage: '20', minimumInstructionCoverage: '20', minimumLineCoverage: '20', minimumMethodCoverage: '20', runAlways: true
+   }
+   
+}
