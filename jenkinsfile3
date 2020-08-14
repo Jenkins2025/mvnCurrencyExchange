@@ -53,16 +53,7 @@ pipeline {
         }
        }
 
-        stage('Build Docker Image') {
-			steps {
-				//"docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
-				script {
-					dockerImage = docker.build("agunuworld/currency-exchange-devops:${env.BUILD_TAG}")
-				}
-
-			}
-		}
-
+        
     post {
             always {
                 echo 'Im awesome.I rum alwys'
