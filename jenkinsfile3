@@ -22,12 +22,18 @@ pipeline {
 				echo "BUILD_URL - $env.BUILD_URL"
 			}
 		}
+
 		stage('Compile') {
 			steps {
 				sh "mvn clean package"
 			}
 		}
 
+        stage ('Code Quality scan')  {
+             steps  {
+            sh "mvn  sonar:sonar"
+        }
+       }
 
        stage ('Test') {
             steps {
