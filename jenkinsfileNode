@@ -25,4 +25,9 @@ node {
         sh 'docker build -t agunuworld/java-web-app .'
     }
 
+  stage ('Slack notification')  {
+    //slackSend(channel:'channel-name', message: "Job is successful, here is the info -  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+   slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#﻿jenkins-devops-microservices', color: 'good', message: 'this job i successful on  jenkins devops microservices', tokenCredentialId: 'slack-authenticaiton-connection'
+   }
+  
 }
