@@ -30,4 +30,10 @@ node {
    slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#﻿jenkins-devops-microservices', color: 'good', message: 'this job i successful on  jenkins devops microservices', tokenCredentialId: 'slack-authenticaiton-connection'
    }
   
+     stage('Push Docker Image'){
+         withCredentials([string(credentialsId: 'jenkins-docker-public-hub-conneciton', variable: 'myDockerPublicRegistry')]) {
+          sh "docker login -u agunuworld -p ${myDockerPublicRegistry}"
+        }
+        sh 'docker push agunuworld/java-web-app'
+     }
 }
