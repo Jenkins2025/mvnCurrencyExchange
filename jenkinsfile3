@@ -51,9 +51,8 @@ pipeline {
             }
 
         }
-       }
-       
-        stage('Build Docker Image') {
+
+      stage('Build Docker Image') {
 			steps {
 				//"docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
 				script {
@@ -61,15 +60,18 @@ pipeline {
 				}
 
 			}
-		}
-        
-       post    {
+		} 
+      
+      post    {
+
             always {
                 echo 'Im awesome.I rum alwys'
             }
+
             success {
                 echo 'I run whenever you are successfule Eghosa'
             }
+
             failure {
                 echo 'Im absent whenever you fail your exam'
             }
