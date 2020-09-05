@@ -85,6 +85,7 @@ pipeline {
 }
 
                     SOnar_quality_gate
+					   sudo chmod 666 /var/run/docker.sock
 					 stage("Quality Gate Status Check"){
           timeout(time: 1, unit: 'HOURS') {
               def qg = waitForQualityGate()
