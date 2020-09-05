@@ -83,3 +83,14 @@ pipeline {
 		}
 	}
 }
+
+                    SOnar_quality_gate
+					 stage("Quality Gate Status Check"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#﻿jenkins-devops-microservices', color: 'danger', message: 'Sonarqube analysis gatejenkins devops microservices', tokenCredentialId: 'slack-authenticaiton-connection'
+             error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }  
