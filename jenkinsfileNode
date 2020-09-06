@@ -68,10 +68,11 @@ node {
    slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#﻿jenkins-devops-microservices', color: 'good', message: 'Docker image buid and pushed to regigistry  jenkins devops microservices', tokenCredentialId: 'slack-authenticaiton-connection'
    }
    
-   stage('Deploy Application In KubernetesCluster') {
-    withKubeConfig(credentialsId: 'kubeConfig') {
-    sh 'kubectl apply -f myspringboot.yml'
-    }
-   }
+   stage("Create deployment") {
+	    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS_Credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+	       withCredentials([kubeconfigFile(credentialsId: 'kubernetes_config', variable: 'KUBECONFIG')]) {
+	        sh 'kubectl create -f kubernetes-configmap.yml'
+	                    }
+	                }
 
 }
