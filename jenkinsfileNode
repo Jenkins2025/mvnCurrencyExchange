@@ -74,5 +74,5 @@ node {
 	        sh 'kubectl create -f kubernetes-configmap.yml'
 	                    }
 	                }
-
+     }
 }
