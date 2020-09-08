@@ -45,9 +45,9 @@ pipeline {
                 docker.withRegistry("https://" + registry, "ecr:us-east2:" + registryCredential) {
                     dockerImage.push()
                 }
-            }
-        }
-    }
+             }
+           }
+         }
 
 
         // Building Docker images
