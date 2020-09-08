@@ -1,0 +1,21 @@
+--- 
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: javawebapp
+  namespace: jacocoworld
+spec: 
+  selector: 
+    matchLabels: 
+      app: javawebapp 
+  replicas: 4 # tells deployment to run 2 pods matching the template 
+  template:
+    metadata: 
+      labels: 
+        app: javawebapp 
+    spec: 
+      containers: 
+      - name: javawebapp
+        image:  agunuworld/moneychange:tagVersion
+        ports: 
+        - containerPort: 8080

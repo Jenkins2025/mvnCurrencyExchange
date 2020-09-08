@@ -16,7 +16,7 @@ pipeline {
 			}
 		}
 
-		stage('Compile') {
+		stage('Compile Decode') {
 			steps {
 				sh "mvn clean package"
 			}
@@ -24,7 +24,7 @@ pipeline {
 
          stage( 'Build Docker Image'){
              steps{
-                 sh "docker build . -t agunuworld/nodeapp:${DOCKER_TAG} "
+                 sh "docker build . -t agunuworld/moneychange:${DOCKER_TAG} "
              }
          }
       
@@ -33,7 +33,7 @@ pipeline {
               withCredentials([string(credentialsId: 'dockerAuthenticationpublic', variable: 'dockerAuthenticationpublic')])  {
               sh "docker login -u agunuworld -p ${dockerAuthenticationpublic}"
            }
-          sh "docker push agunuworld/nodeapp:${DOCKER_TAG} "
+          sh "docker push agunuworld/moneychange:${DOCKER_TAG} "
           }
           }
        
@@ -42,7 +42,7 @@ pipeline {
                sh "chmod +x changeTag.sh"
                sh "./changeTag.sh ${DOCKER_TAG}"
                sshagent(['eksclimasternodes']) {
-               sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ec2-user@3.135.209.242:/home/ec2-user/"
+               sh "scp -o StrictHostKeyChecking=no services.yml ns-and-sa.yaml node-app-pod.yml ec2-user@3.135.209.242:/home/ec2-user/"
                script{
                    try{
                        sh "ssh ec2-user@3.135.209.242 kubectl apply -f ."
