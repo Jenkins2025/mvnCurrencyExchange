@@ -16,6 +16,6 @@ spec:
     spec: 
       containers: 
       - name: javawebapp
-        image:  agunuworld/moneychange:tagVersion
+        image:  agunuworld/moneychange:22
         ports: 
         - containerPort: 8080
