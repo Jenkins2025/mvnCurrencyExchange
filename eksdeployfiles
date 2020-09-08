@@ -4,8 +4,10 @@ pipeline {
      environment{
           DOCKER_TAG = getDockerTag()
           mavenHome = tool 'myMaven4'
-		PATH = "$mavenHome/bin:$PATH"
-         registry = "311301640590.dkr.ecr.us-east-2.amazonaws.com/myawesome-repo:latest"
+		  PATH = "$mavenHome/bin:$PATH"
+          registry = "311301640590.dkr.ecr.us-east-2.amazonaws.com/myawesome-repo:latest"
+          registryCredential = 'ID_OF_MY_AWS_JENKINS_CREDENTIAL'
+          dockerImage = ''
      }
        
      stages {
@@ -29,6 +31,25 @@ pipeline {
             }
         }
 
+        stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    
+        stage('Deploy image') {
+        steps{
+            script{
+                docker.withRegistry("https://" + registry, "ecr:us-east2:" + registryCredential) {
+                    dockerImage.push()
+                }
+            }
+        }
+    }
+
+
         // Building Docker images
        stage('Building image') {
          steps{
@@ -38,6 +59,7 @@ pipeline {
             }
           }
          }
+
 
          // Uploading Docker images into Docker Hub
     stage('Uploading to ECR') {
