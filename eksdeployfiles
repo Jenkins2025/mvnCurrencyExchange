@@ -39,6 +39,18 @@ pipeline {
           }
          }
 
+         // Uploading Docker images into Docker Hub
+    stage('Uploading to ECR') {
+     steps{  
+         script {
+                sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 311301640590.dkr.ecr.us-east-2.amazonaws.com'
+                sh 'docker tag myawesome-repo:latest 311301640590.dkr.ecr.us-east-2.amazonaws.com/myawesome-repo:latest'
+                sh 'docker push 311301640590.dkr.ecr.us-east-2.amazonaws.com/myawesome-repo:latest'
+         }
+        }
+      }
+   
+
          stage("build & SonarQube analysis") {
             agent any
             steps {
