@@ -12,8 +12,10 @@ pipeline {
     stages {
         stage('Cloning Git') {
             steps {
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agunuworld4/jenkin-devops-microservice.git']]])   
+            //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agunuworld4/jenkin-devops-microservice.git']]])   
+             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/akannan1087/myPythonDockerRepo']]])  
             }
+
         }
    
        stage('Compile Decode') {
@@ -70,7 +72,7 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-            dockerImage.run("-p 9095:8000 --rm --name myawesome-repoContainer")
+            dockerImage.run("-p 9090:5000 --rm --name myawesome-repoContainer")
          }
       }
     }
