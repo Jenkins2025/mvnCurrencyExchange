@@ -5,6 +5,7 @@ pipeline {
           DOCKER_TAG = getDockerTag()
           mavenHome = tool 'myMaven4'
 		PATH = "$mavenHome/bin:$PATH"
+         registry = "311301640590.dkr.ecr.us-east-2.amazonaws.com/myawesome-repo:latest"
      }
        
      stages {
@@ -28,6 +29,15 @@ pipeline {
             }
         }
 
+        // Building Docker images
+       stage('Building image') {
+         steps{
+            script {
+             dockerImage = docker.build registry
+              docker.build('myawesome-repo')
+            }
+          }
+         }
 
          stage("build & SonarQube analysis") {
             agent any
