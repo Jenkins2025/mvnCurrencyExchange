@@ -14,6 +14,27 @@ pipeline {
             }
         }
    
+       stage('Compile Decode') {
+			steps {
+				sh "mvn clean package"
+			}
+		}
+
+        stage ('Test') {
+            steps {
+                sh "mvn test"
+            }
+        }
+
+        stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('sonarQube') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+
     // Building Docker images
     stage('Building image') {
       steps{
@@ -47,9 +68,11 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-            dockerImage.run("-p 8096:5000 --rm --name myawesome-repoContainer")
+            dockerImage.run("-p 9095:8000 --rm --name myawesome-repoContainer")
          }
       }
     }
+
+
   }
 }
