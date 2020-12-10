@@ -24,10 +24,13 @@ node {
      }
 
      
-    
-    stage('Build Docker Image'){
+    stage('Remove Docker Image'){
         sh "docker rmi -f agunu2025/currency-exchange-devops:${buildNumber} ."
-    }
+       }
+    
+     stage('Build Docker Image'){
+        sh "docker rm -f agunu2025/currency-exchange-devops:${buildNumber} ."
+       }
 
    stage('Deploy Application In KubernetesCluster'){
         sh "chmod +x SSH_PRIVATE_KEY"
