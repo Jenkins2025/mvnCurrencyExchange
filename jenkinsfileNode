@@ -29,11 +29,11 @@ node {
         sh "docker rmi -f agunu2025/currency-exchange-devops:${buildNumber} ."
     }
 
-    
-   stage('Deploy Application In KubernetesCluster') {
-    withKubeConfig(credentialsId: 'kuberConfigurationfiles') {
-    sh 'kubectl apply -f myspringboot.yml'
-    }
-   }
-
+   stage('Deploy Application In KubernetesCluster'){
+        sshagent(['SSH_PRIVATE_KEY']) {
+         sh "scp -o StrictHostKeyChecking=no currency-exchange.yml agunu2020@3.135.209.242:/home/agunu2020"
+         sh 'kubectl apply -f myspringboot.yml'
+        }
+     }
+   
 }
