@@ -33,7 +33,6 @@ node {
        }
 
    stage('Deploy Application In KubernetesCluster'){
-        sh "chmod +x SSH_PRIVATE_KEY"
         sshagent(['SSH_PRIVATE_KEY']) {
          sh "scp -o StrictHostKeyChecking=no currency-exchange.yml agunu2020@3.135.209.242:/home/agunu2020"
          sh 'kubectl apply -f myspringboot.yml'
