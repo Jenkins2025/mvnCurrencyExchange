@@ -34,7 +34,7 @@ node {
 
    stage('Deploy Application In KubernetesCluster'){
         sshagent(['MacProAwsKeyPair']) {
-         sh "scp -o StrictHostKeyChecking=no currency-exchange.yml ec2-user@13.58.189.182 :/home/ec2-user"
+         sh "scp -o StrictHostKeyChecking=no currency-exchange.yml ec2-user@13.58.189.182:/home/ec2-user"
          sh 'kubectl apply -f currency-exchange.yml'
         }
      }
