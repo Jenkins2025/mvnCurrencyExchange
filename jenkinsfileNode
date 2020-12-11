@@ -38,6 +38,7 @@ node {
         }
      script{
         try{
+          sh "ssh ec2-user@13.58.189.182 chmod +x currency-exchange.yml"
           sh "ssh ec2-user@13.58.189.182 kubectl apply -f ."
           }catch(error){
           sh "ec2-user@13.58.189.182 kubectl create -f ."
