@@ -32,17 +32,13 @@ node {
         sh "docker rm -f agunu2025/currency-exchange-devops:${buildNumber} ."
        }
 
-   stage('Deploy Application In KubernetesCluster'){
+
+    stage("Deploy Application In KubernetesCluster"){
         sshagent(['MacProAwsKeyPair']) {
-         sh "scp -o StrictHostKeyChecking=no currency-exchange.yml ec2-user@13.58.189.182:/home/ec2-user"
+		    sh 'scp -o StrictHostKeyChecking=no  currency-exchange.yml ec2-user@13.58.189.182:'
+		    //sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.47.232 docker stack rm springboot'
+              sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.58.189.182 kubectl applly -f currency-exchange.yml'
         }
-     script{
-        try{
-          sh "ssh ec2-user@13.58.189.182 chmod +x currency-exchange.yml"
-          sh "ssh ec2-user@13.58.189.182 kubectl apply -f ."
-          }catch(error){
-          sh "ec2-user@13.58.189.182 kubectl create -f ."
-             }
-           }
-         }
+    }
+
 }
