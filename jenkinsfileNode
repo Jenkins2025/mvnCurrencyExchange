@@ -33,8 +33,8 @@ node {
        }
 
    stage('Deploy Application In KubernetesCluster'){
-        sshagent(['SSH_PRIVATE_KEY']) {
-         sh "scp -o StrictHostKeyChecking=no currency-exchange.yml agunu2020@3.135.209.242:/home/agunu2020"
+        sshagent(['MacProAwsKeyPair']) {
+         sh "scp -o StrictHostKeyChecking=no currency-exchange.yml ec2-user@172.31.9.73:/home/ec2-user"
          sh 'kubectl apply -f myspringboot.yml'
         }
      }
