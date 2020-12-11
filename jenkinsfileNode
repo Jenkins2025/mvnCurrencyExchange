@@ -37,7 +37,7 @@ node {
         sshagent(['MacProAwsKeyPair']) {
 		    sh 'scp -o StrictHostKeyChecking=no  currency-exchange.yml ec2-user@13.58.189.182:'
 		    //sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.47.232 docker stack rm springboot'
-              sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.58.189.182 kubectl applly -f currency-exchange.yml'
+              sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.58.189.182 kubectl apply -f currency-exchange.yml'
         }
     }
 
